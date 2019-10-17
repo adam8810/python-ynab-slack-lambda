@@ -22,7 +22,6 @@ def handlePost(body):
     ynab = YNAB(body['user_id'][0])
     filtered_categories = ynab.search_categories(body['text'][0])
     response = build_message(filtered_categories)
-    print(json.dumps(response, indent=4))
     return response
 
 
