@@ -35,7 +35,7 @@ class YNAB:
 
     @staticmethod
     def __format_category(category: dict) -> str:
-        return '{}: ${} - ${} = ${}'.format(
+        return '{}: ${:,.2f} - ${:,.2f} = ${:,.2f}'.format(
             category['name'],
             category['budgeted'] / 1000,
             abs(category['activity']) / 1000,
@@ -46,8 +46,11 @@ class YNAB:
         string = ''
         for group in categories:
             string += group + '\n'
-            for category in categories[group]:
-                string += '\t' + self.__format_category(category) + '\n'
+            for idx, category in enumerate(categories[group]):
+                print(len(categories[group]), idx)
+                indent = '┣ ' if idx + 1 != len(categories[group]) else '┗ '
+                string += '\t' + indent + \
+                    self.__format_category(category) + '\n'
 
         return string
 
