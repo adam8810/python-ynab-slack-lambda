@@ -33,12 +33,21 @@ class YNAB:
         if state is not None:
             self.state = state
 
+    @staticmethod
+    def __format_category(category: dict) -> str:
+        return '{}: ${} - ${} = ${}'.format(
+            category['name'],
+            category['budgeted'] / 1000,
+            abs(category['activity']) / 1000,
+            category['balance'] / 1000
+        )
+
     def __format(self, categories: dict) -> str:
         string = ''
         for group in categories:
             string += group + '\n'
             for category in categories[group]:
-                string += '\t' + category + '\n'
+                string += '\t' + self.__format_category(category) + '\n'
 
         return string
 
@@ -88,6 +97,6 @@ class YNAB:
                         found[group['name']] = []
 
                     # Append category to found key
-                    found[group['name']].append(group_category['name'])
+                    found[group['name']].append(group_category)
 
         return self.__format(found)
