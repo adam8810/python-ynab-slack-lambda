@@ -19,8 +19,13 @@ def respond(err, res=None, **kwargs):
 
 
 def handlePost(body):
+    try:
+        text = body['text'][0]
+    except:
+        text = ''
+
     ynab = YNAB(body['user_id'][0])
-    filtered_categories = ynab.search_categories(body['text'][0])
+    filtered_categories = ynab.search_categories(text)
     response = build_message(filtered_categories)
     return response
 
@@ -29,6 +34,8 @@ def lambda_handler(event, context):
     operations = {
         'POST': handlePost
     }
+
+    print(parse_qs(event['body']))
 
     operation = event['httpMethod']
     if operation in operations:

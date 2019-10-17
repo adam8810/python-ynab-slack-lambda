@@ -81,7 +81,7 @@ class YNAB:
         # TODO: Add error handling
         return json.loads(response.content)['data']['category_groups']
 
-    def search_categories(self, searchText: str) -> dict:
+    def search_categories(self, searchText: str = '') -> dict:
         """Returns formatted string of groups and categories within that match a given string
 
         :param searchText: String to compare categories to
@@ -91,7 +91,7 @@ class YNAB:
         found = {}
         for group in groups:
             for group_category in group['categories']:
-                if group_category['name'].lower().find(searchText.lower()) > -1:
+                if searchText == '' or group_category['name'].lower().find(searchText.lower()) > -1:
                     # We create a new empty list if the key does not exist in `found`
                     if group['name'] not in found:
                         found[group['name']] = []
