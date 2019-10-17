@@ -24,7 +24,6 @@ def build_message(text: str, **kwargs: dict) -> dict:
     # Defaults to in_channel
     response_type = 'in_channel'
     if 'response_type' in kwargs and kwargs['response_type'] in response_types:
-        print('e', kwargs['response_type'])
         response_type = str(kwargs['response_type'])
 
-    return {text: text, response_type: response_type}
+    return {'text': text, 'response_type': response_type}
